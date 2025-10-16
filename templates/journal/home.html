@@ -1,0 +1,304 @@
+{% extends 'journal/base.html' %}
+{% load static %}
+
+{% block title %}Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
+
+{% block content %}
+<section class="info-section" id="info-section">
+    <div class="section-content" id="topic-section">
+        <a href="">
+            <p>Геодезия</p>
+        </a>
+        <a href="">
+            <p>Аэрокосмические исследования Земли, фотограмметрия</p>
+        </a>
+        <a href="">
+            <p>Геоинформатика, картография</p>
+        </a>
+        <a href="">
+            <p>Землеустройство, кадастр и мониторинг земель</p>
+        </a>
+        <a href="" class="last-link-info">
+            <p>Оптические и оптико-электронные приборы и комплексы</p>
+        </a>
+    </div>
+</section>
+
+<section class="book-info-section">
+    <div class="section-content">
+        <div class="book-info">
+            <h1>Известия вузов. Геодезия и аэрофотосъемка</h1>
+            <div class="about-text">
+                <p>
+                    С учетом своей более полувековой истории и опыта, журнал динамично развивается и активно использует новые возможности наукометрического и библиографического характера. <br>
+                    Так, в Журнале предусмотрена политика "быстрой публикации" с применением технологий НЭБ eLIBRARY - Online First. Все статьи сначала входят в публикационную нишу журнала Online First, получают свой идентификатор DOI и индексирование, а позже переносится в выпуск этого же года. <br>
+                    Оптимизация публикационной деятельности приветствуется у 90% авторов в силу рабочей необходимости, и "Геодезия и аэрофотосъемка" достойно отвечает на такой запрос научного сообщества.
+                </p>
+                <a href="{% url 'journal_info' %}" class="more-journal">Подробнее о журнале</a>
+            </div>
+            <a href="https://miigaik.editorum.ru/ru/login">Подать статью</a>
+        </div>
+        <div class="book-img">
+            <img src="{% static 'img/gia.png' %}" alt="">
+            <p>Издается в МИИГАиК, входит в перечень журналов ВАК Минобрнауки РФ</p>
+            <p>ISSN 0536-101X (pr)</p>
+            <p>ISSN 2618-7299 (onl)</p>
+        </div>
+    </div>
+</section>
+
+<section class="about-red-section">
+    <div class="section-content">
+        <div class="appeal-block">
+            <div class="appeal-text">
+                <h2>Обращение главного редактора</h2>
+                <div class="appeal-text-but">
+                    <p>
+                        Уважаемые коллеги! <br>
+                        Мы рады приветствовать Вас на сайте уникального в своей отрасли научного журнала "Известия вузов "Геодезия и аэрофотосъемка".
+                    </p>
+                    <a href="{% url 'journal_info' %}">Читать обращение полностью</a>
+                </div>
+                <h3>Президент университета, дважды Герой Советского Союза, академик РАН, доктор технических наук, профессор <br>
+                    Савиных Виктор Петрович</h3>
+            </div>
+            <div class="appeal-img">
+                <img src="{% static 'img/1.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="reviewer-archive-section">
+    <div class="section-content">
+        <div class="review-block">
+            <div class="review-name">
+                <h2>Стать рецензентом</h2>
+            </div>
+            <p>
+                Приглашаем квалифицированных экспертов заявленных научных областей в коллектив рецензентов научного журнала.
+            </p>
+            <a href="{% url 'contact' %}">Заполнить заявку</a>
+        </div>
+        <div class="archive-section">
+            <div class="arch-name">
+                <h2>Архив журнала</h2>
+            </div>
+            <p>
+                На 2025 год историческая глубина архива - 68 лет. <br>
+                Редакция журнала бережно хранит ценность издательского дела МИИГАиК - журнал Известия высших учебных заведений - раздел "Геодезия и аэрофотосъемка". <br>
+                Архив одинаково значим как источник цитирования актуальной и передовой информации научного сообщества, а также значим своими персоналиями и достижениями в контексте науки своего времени.
+            </p>
+            <a href="{% url 'archive' %}">Посмотреть архив</a>
+        </div>
+    </div>
+</section>
+
+<section class="form-section">
+    <div class="section-content">
+        <div class="partnership-form">
+            <h2>Партнерство</h2>
+            <p style="text-align: center; color: #00525c; margin-bottom: 30px; font-size: 16px;">
+                Свяжитесь с нами для обсуждения сотрудничества
+            </p>
+            
+            <div id="formMessages"></div>
+            
+            <form action="{% url 'contact' %}" class="form-partnership" method="post" id="contactForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.name }}
+                    <label for="{{ form.name.id_for_label }}">
+                        <i class="icon-user">👤</i> {{ form.name.label }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    {{ form.phone }}
+                    <label for="{{ form.phone.id_for_label }}">
+                        <i class="icon-phone">📞</i> {{ form.phone.label }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    {{ form.email }}
+                    <label for="{{ form.email.id_for_label }}">
+                        <i class="icon-email">✉️</i> {{ form.email.label }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    {{ form.message }}
+                    <label for="{{ form.message.id_for_label }}">
+                        <i class="icon-message">💬</i> {{ form.message.label }}
+                    </label>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Отправить</span>
+                    <span class="btn-icon">🚀</span>
+                </button>
+            </form>
+        </div>
+        <div class="partnership-img">
+            <img src="{% static 'img/gia_main.png' %}" alt="">
+        </div>
+    </div>
+</section>
+
+<div id="tsparticles"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    
+    const submitBtn = form.querySelector('.btn-submit');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnIcon = submitBtn.querySelector('.btn-icon');
+    const messagesContainer = document.getElementById('formMessages');
+    
+    // Анимация при фокусе на полях
+    const inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+        
+        // Проверка заполненности при вводе
+        input.addEventListener('input', function() {
+            if (this.value) {
+                this.parentElement.classList.add('filled');
+            } else {
+                this.parentElement.classList.remove('filled');
+            }
+        });
+    });
+    
+    // Обработка отправки формы
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Показываем состояние загрузки
+        submitBtn.classList.add('loading');
+        btnText.textContent = 'Отправляем...';
+        btnIcon.textContent = '⏳';
+        submitBtn.disabled = true;
+        
+        // Очищаем предыдущие сообщения
+        messagesContainer.innerHTML = '';
+        
+        const formData = new FormData(this);
+        
+        fetch('{% url "contact" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('success', '✅ Ваше сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.');
+                form.reset();
+                // Убираем классы фокуса
+                inputs.forEach(input => {
+                    input.parentElement.classList.remove('focused', 'filled');
+                });
+            } else {
+                let errorText = 'Произошла ошибка при отправке сообщения.';
+                if (data.errors) {
+                    errorText = 'Пожалуйста, исправьте следующие ошибки:<br>';
+                    for (const field in data.errors) {
+                        errorText += `• ${data.errors[field].join(', ')}<br>`;
+                    }
+                }
+                showMessage('error', errorText);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showMessage('error', 'Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз.');
+        })
+        .finally(() => {
+            // Возвращаем обычное состояние кнопки
+            submitBtn.classList.remove('loading');
+            btnText.textContent = 'Отправить';
+            btnIcon.textContent = '🚀';
+            submitBtn.disabled = false;
+        });
+    });
+    
+    function showMessage(type, text) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `form-${type}`;
+        messageDiv.innerHTML = text;
+        messagesContainer.appendChild(messageDiv);
+        
+        // Автоматически скрываем сообщение через 5 секунд
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.style.opacity = '0';
+                messageDiv.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (messageDiv.parentNode) {
+                        messageDiv.remove();
+                    }
+                }, 300);
+            }
+        }, 5000);
+    }
+    
+    // Валидация в реальном времени
+    const emailInput = form.querySelector('input[type="email"]');
+    const phoneInput = form.querySelector('input[name="phone"]');
+    
+    if (emailInput) {
+        emailInput.addEventListener('blur', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (this.value && !emailRegex.test(this.value)) {
+                this.style.borderColor = '#dc3545';
+                showFieldError(this, 'Пожалуйста, введите корректный email адрес');
+            } else {
+                this.style.borderColor = '';
+                hideFieldError(this);
+            }
+        });
+    }
+    
+    if (phoneInput) {
+        phoneInput.addEventListener('blur', function() {
+            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+            if (this.value && !phoneRegex.test(this.value)) {
+                this.style.borderColor = '#dc3545';
+                showFieldError(this, 'Пожалуйста, введите корректный номер телефона');
+            } else {
+                this.style.borderColor = '';
+                hideFieldError(this);
+            }
+        });
+    }
+    
+    function showFieldError(input, message) {
+        hideFieldError(input);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error';
+        errorDiv.textContent = message;
+        errorDiv.style.color = '#dc3545';
+        errorDiv.style.fontSize = '12px';
+        errorDiv.style.marginTop = '5px';
+        input.parentElement.appendChild(errorDiv);
+    }
+    
+    function hideFieldError(input) {
+        const existingError = input.parentElement.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
+        }
+    }
+});
+</script>
+{% endblock %}

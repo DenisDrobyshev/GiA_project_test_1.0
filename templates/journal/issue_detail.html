@@ -1,0 +1,55 @@
+{% extends 'journal/base.html' %}
+{% load static %}
+
+{% block title %}Выпуск {{ issue.number }}, {{ issue.year }} - Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
+
+{% block content %}
+<section class="info-section">
+    <div class="section-content">
+        <h1>Выпуск {{ issue.number }}, {{ issue.year }}</h1>
+        
+        {% if issue.title %}
+            <h2>{{ issue.title }}</h2>
+        {% endif %}
+        
+        {% if issue.description %}
+            <div class="issue-description">
+                <p>{{ issue.description }}</p>
+            </div>
+        {% endif %}
+        
+        {% if issue.cover_image %}
+            <div class="issue-cover">
+                <img src="{{ issue.cover_image.url }}" alt="Обложка выпуска {{ issue.number }}, {{ issue.year }}">
+            </div>
+        {% endif %}
+        
+        {% if issue.articles.all %}
+            <div class="issue-articles">
+                <h3>Статьи выпуска</h3>
+                <div class="articles-list">
+                    {% for article in issue.articles.all %}
+                        <div class="article-item">
+                            <h4><a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a></h4>
+                            <p class="article-authors">{{ article.authors }}</p>
+                            <p class="article-abstract">{{ article.abstract|truncatewords:20 }}</p>
+                            <div class="article-actions">
+                                <a href="{% url 'article_detail' article.pk %}" class="btn-read">Читать статью</a>
+                                {% if article.pdf_file %}
+                                    <a href="{{ article.pdf_file.url }}" class="btn-download" target="_blank">Скачать PDF</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <p>Статьи в этом выпуске не найдены.</p>
+        {% endif %}
+        
+        <div class="issue-actions">
+            <a href="{% url 'issues' %}" class="btn-back">К списку выпусков</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

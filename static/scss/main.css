@@ -1,0 +1,102 @@
+@font-face {
+  font-family: "Montserrat-Reg";
+  src: url(../fonts/Montserrat/static/Montserrat-Regular.ttf);
+}
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url(../fonts/Montserrat/static/Montserrat-Bold.ttf);
+}
+@font-face {
+  font-family: "Montserrat-SemiBold";
+  src: url(../fonts/Montserrat/static/Montserrat-SemiBold.ttf);
+}
+@font-face {
+  font-family: "Montserrat-Light";
+  src: url(../fonts/Montserrat/static/Montserrat-Light.ttf);
+}
+.form-partnership {
+  position: relative;
+  margin-top: 50px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  gap: 50px;
+}
+.form-partnership input[type=text] {
+  display: inline-block;
+  width: 500px;
+  height: 40px;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 10px 10px 10px 160px;
+  transition: all 0.1s ease-out;
+}
+@media (max-width: 950px) {
+  .form-partnership input[type=text] {
+    width: 80vw;
+  }
+}
+@media (max-width: 950px) {
+  .form-partnership input[type=text] {
+    width: 75vw;
+  }
+}
+.form-partnership input[type=text] + label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  line-height: 40px;
+  color: white;
+  border-radius: 10px 0 0 10px;
+  padding: 0 20px;
+  background: #00525c;
+  transform: translateZ(0) translateX(0);
+  transition: all 0.3s ease-in;
+  transition-delay: 0.2s;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-partnership input[type=text]:focus + label {
+  transform: translateY(-120%) translateX(0%);
+  border-radius: 10px;
+  transition: all 0.1s ease-out;
+}
+.form-partnership input[type=text]:focus {
+  padding: 10px;
+  transition: all 0.3s ease-out;
+  transition-delay: 0.2s;
+}
+
+.tel-input input[type=text] + label {
+  top: 19.8% !important;
+}
+.tel-input input[type=text] {
+  padding: 10px 10px 10px 160px;
+}
+
+.email-input input[type=text] + label {
+  top: 39.3%;
+}
+.email-input input[type=text] {
+  padding: 10px 10px 10px 160px;
+}
+
+.message-input input[type=text] + label {
+  top: 59%;
+}
+.message-input input[type=text] {
+  padding: 10px 10px 10px 160px;
+}
+.message-input input[type=text] {
+  height: 100px;
+}
+.message-input input[type=text] + label {
+  height: 100px;
+}/*# sourceMappingURL=main.css.map */

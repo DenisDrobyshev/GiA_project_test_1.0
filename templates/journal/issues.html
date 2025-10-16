@@ -1,0 +1,61 @@
+{% extends 'journal/base.html' %}
+{% load static %}
+
+{% block title %}Выпуски журнала - Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
+
+{% block content %}
+<section class="info-section">
+    <div class="section-content">
+        <h1>Выпуски журнала</h1>
+        {% if issues %}
+            <div class="issues-list">
+                {% for issue in issues %}
+                    <div class="issue-item">
+                        <div class="issue-header">
+                            <h3>
+                                <a href="{% url 'issue_detail' issue.pk %}">
+                                    Выпуск {{ issue.number }}, {{ issue.year }}
+                                </a>
+                                {% if issue.is_current %}
+                                    <span class="current-badge">Текущий выпуск</span>
+                                {% endif %}
+                            </h3>
+                        </div>
+                        {% if issue.title %}
+                            <p class="issue-title">{{ issue.title }}</p>
+                        {% endif %}
+                        {% if issue.description %}
+                            <p class="issue-description">{{ issue.description|truncatewords:20 }}</p>
+                        {% endif %}
+                        <div class="issue-actions">
+                            <a href="{% url 'issue_detail' issue.pk %}" class="btn-read">Подробнее</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            {% if is_paginated %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; первая</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                        {% endif %}
+                        
+                        <span class="current">
+                            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                        </span>
+                        
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>Выпуски не найдены.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

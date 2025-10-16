@@ -1,0 +1,306 @@
+{% extends 'journal/base.html' %}
+{% load static %}
+
+{% block title %}Библиография - Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
+
+{% block content %}
+<section class="section-name-page">
+    <div class="section-content">
+        <h4>Библиография</h4>
+        <p>
+            правила научного журнала
+        </p>
+    </div>
+</section>
+
+<section class="subname-section">
+    <div class="section-content">
+        <h5>Общие правила</h5>
+    </div>
+</section>
+
+<section class="text-section">
+    <div class="section-content">
+        <ul>
+            <li>1. <strong>Жирным</strong> шрифтом выделены нюансы библиографических стилей, в статье жирный шрифт не требуется.</li>
+            <li>2. Иностранная литература в Библиографии русской версии оформляется по ГОСТ Р 7.0.5–2008.</li>
+            <li>3. Российская литература в Библиографии английской версии оформляется в стиле Vancouver.</li>
+            <li>4. Допустимые языки для записи библиографической строки — <strong>русский и английский</strong>. Если источник на
+                любом другом языке, он записывается на английском, а в конце библиографической строки в круглых скобках
+                указывается оригинальный язык рукописи, например: (in German)</li>
+        </ul>
+    </div>
+</section>
+
+<section class="subname-section">
+    <div class="section-content">
+        <h5>Библиография / References</h5>
+    </div>
+</section>
+
+<section class="text-section">
+    <div class="section-content">
+        <p>
+            <strong>Далее размещены образцы сборки библиографической строки по элементам, чтобы подставить свои варианты и
+                сформировать список источников.</strong> <br>
+            Примеры оформления книг: <br>
+            <br>
+            <strong>Иванов И.И. Название произведения. Город: Издательство, год. 100 с. <br>
+                Ivanov II, Petrov PP. Title translit [Title in English]. City: Publishing House; year. 100 p. (In
+                Russian).</strong>
+        </p>
+
+        <p>
+            <h5>КНИГА<br>
+                1 АВТОР</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И. Название произведения. Город: Издательство, год. 100 с. <br>
+                    <strong>2.</strong> Smith A. Title // Publishing House: City, year. 100 p.
+                </li>
+                <li><strong>1.</strong> Ivanov II. <strong>Title translit</strong> [Title in English]. City: Publishing House; year.
+                    100 p. (In Russian). <br>
+                    <strong>2.</strong> Smith A. <strong>Title.</strong> City: Publishing House; year. 100 p.
+                </li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>КНИГА<br>
+                2 АВТОРА +</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И., Петров П.П. Название произведения. Город: Издательство, год. 100 с.
+                </li>
+                <li><strong>1.</strong> Ivanov II, Petrov PP. <strong>Title translit</strong> [Title in English]. City: Publishing
+                    House; year. 100 p. (In Russian).</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>КНИГА, часть книги или отдельный том, глава</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И. Название произведения. Ч. 1. Название части или главы. Город:
+                    Издательство, год. 100 с. <br>
+                    <strong>2.</strong> Иванов И.И. Название произведения: в 3 т. Т. 1. Название части или главы. Город:
+                    Издательство, год. 100 с.
+                </li>
+                <li><strong>1.</strong> Ivanov II. <strong>Title translit</strong> [Title in English]. Part 1. <strong>Title of the part
+                        translit</strong> [Title of the part in English]. City: Publishing House; year. 100 p. (In
+                    Russian). <br>
+                    <strong>2.</strong> Ivanov II. <strong>Title translit</strong> [Title in English]. Vol. 1. <strong>Title of the
+                        volume translit</strong> [Title of the volume in English]. City: Publishing House; year. 100
+                    p. (In Russian).
+                </li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>КНИГА<br>
+                с указанием редакторов</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И. Название произведения / под.ред. П.П. Петрова. Город: Издательство,
+                    год. 100 с.</li>
+                <li><strong>1.</strong> Ivanov II. <strong>Title translit</strong> [Title in English]. Petrov PP. (ed.). City:
+                    Publishing House; year. 100 p. (In Russian).</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>КНИГА / СБОРНИК<br>
+                без авторов, с редакторами </h5>
+
+            <ul>
+                <li><strong>1.</strong> Название произведения / под.ред. П.П. Петрова. Город: Издательство, год. 100 с.
+                </li>
+                <li><strong>1.</strong> <strong>Title translit</strong> [Title in English]. Petrov PP. (ed.). City: Publishing
+                    House; year. 100 p. (In Russian).</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>КНИГА<br>
+                издание в переводе</h5>
+
+            <ul>
+                <li><strong>1.</strong> Смит А. [Smith A.] Название произведения на русском языке: в 2 т.: пер. с нем.
+                    Город: Издательство, год. 100 с.</li>
+                <li><strong>1.</strong> Smith A. <strong>Title translit</strong> [Title in English]. 2 volumes. City: Publishing
+                    House; year. 100 p. (In Russian).</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>МОНОГРАФИЯ</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И. Название произведения / под.ред. П.П. Петрова. Город: Издательство,
+                    год. 100 с. <br>
+                    <strong>2.</strong> Иванов И.И. Название главы монографии // Название монографии / под.ред. П.П.
+                    Петрова. Город: Издательство, год. С. 24-50.
+                </li>
+                <li><strong>1.</strong> Ivanov II. <strong>Title of the whole work</strong> [Title in English]. Petrov PP. (ed.).
+                    City: Publishing House; year; 100 p. (In Russian). <br>
+                    <strong>2.</strong> Ivanov II. <strong>Title of the chapter translit</strong> [Title in English]. <strong>Title of
+                        the whole work</strong> [Title in English]. Petrov PP. (ed.). City: Publishing House; year;
+                    24-50. (In Russian).
+                </li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>СТАТЬЯ В ЖУРНАЛЕ<br>
+                переводная версия</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И., Петров П.П. Название статьи // Название журнала. год. Т. 54. № 3. С.
+                    391–402. DOI:номер.</li>
+                <li><strong>1.</strong> Ivanov II, Petrov PP. Title in English. <strong>Journal</strong>. year;74(3): 391-402.
+                    DOI:number.</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>СТАТЬЯ В ЖУРНАЛЕ <br>
+                1 АВТОР</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И. Название статьи // Название журнала. год. Т. 54. № 3. С. 391–402.
+                    DOI:номер.</li>
+                <li><strong>1.</strong> Ivanov II. Title of the article translit [Title in English]. <strong>Journal</strong>.
+                    year;74(3): 391-402. (in Russian). DOI:number.</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>СТАТЬЯ В ЖУРНАЛЕ / СБОРНИКЕ <br>
+                2 АВТОРА +</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И., Петров П.П., Сидоров С.С. Название статьи // Название журнала. год.
+                    Т. 54. № 3. С. 391–402. DOI:номер. <br>
+                    <strong>2.</strong> Smith A. Title of the article // Proceedings of 3rd International Conference on
+                    Software Reuse. year. P. 126–138. DOI:number.
+                </li>
+                <li><strong>1.</strong> Ivanov II, Petrov PP, Sidorov SS. Title of the article translit [Title in
+                    English]. <strong>Journal</strong>. year;74(3): 391-402. (in Russian). DOI:number. <br>
+                    <strong>2.</strong> Smith A. Title of the article translit in English. <strong>Proceedings of 3rd
+                        International Conference on Software Reuse</strong>. year; 126-138. DOI:number.
+                </li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>СТАТЬЯ ИЗ ИНОСТРАННОГО ЖУРНАЛА</h5>
+
+            <ul>
+                <li><strong>1.</strong> Smith A., Smith B., Smith C., et al. Title // Journal. year. Vol.34. P. 305-310.
+                    DOI:number</li>
+                <li><strong>1.</strong> Smith A, Smith B, Smith C, et al. Title in English. <strong>Journal</strong>. year;34:
+                    305-310. DOI:number.</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>СТАТЬЯ / ПРЕПРИНТ в электронном издании / <br>
+                www.arXiv.org</h5>
+
+            <ul>
+                <li><strong>1.</strong> Smith A., Smith B. Title of the article in English // Journal. year. Vol. 39. No.
+                    10. P. 58–59. <strong>[Электронный ресурс]. Режим доступа:</strong> http://www... <strong>(дата обращения:
+                        12.09.2022).</strong> <br>
+                    <strong>2.</strong> Smith A., Smith B. Title of the preprint in English // Preprint arXiv.org, year.
+                    <strong>[Электронный ресурс]. Режим доступа:</strong> https://arxiv.org/pdf/2108.11535.pdf   <strong>(дата
+                        обращения: 12.09.2022).</strong>
+                </li>
+                <li><strong>1.</strong> Smith A, Smith B. Title of the article in English. <strong>Journal</strong>. year;39: 58-59.
+                    <strong>Available from:</strong> http://www... <strong>(Accessed 12 September 2022).</strong> <br>
+                    <strong>2.</strong> Smith A, Smith B. Title of the preprint in English. <strong>Preprint arXiv.org</strong>,
+                    year. <strong>Available from:</strong> https://arxiv.org/pdf/2108.11535.pdf   <strong>(Accessed 12 September
+                        2022).</strong>
+                </li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>ДИССЕРТАЦИЯ на соискание ученой степени кандидата наук </h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И. Название диссертации: дис. ... канд. экон. наук: 08.00.05 «Экономика и
+                    управление народным хозяйством: маркетинг». год. 200 с.</li>
+                <li><strong>1.</strong> Ivanov II. <strong>Title of the thesis translit</strong> [Title in English]. PhD thesis.
+                    City: year; 200 p. (In Russian).</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>ДИССЕРТАЦИЯ на соискание ученой степени доктора наук</h5>
+
+            <ul>
+                <li><strong>1.</strong> Иванов И.И. Название диссертации: дис. ... д-ра. экон. наук: 08.00.05 «Экономика и
+                    управление народным хозяйством: маркетинг». год. 200 с.</li>
+                <li><strong>1.</strong> Ivanov II. <strong>Title of the thesis translit</strong> [Title in English]. Dr. of Sci.
+                    thesis. City: year; 200 p. (In Russian).</li>
+            </ul>
+        </p>
+
+        <p>
+            <h5>ПАТЕНТЫ, СВИДЕТЕЛЬСТВА НА ПРОГРАММЫ ДЛЯ ЭВМ</h5>
+
+            <ul>
+                <li><strong>1.</strong> Патент РФ на изобретение №2193864 / 10.12.2002. Иванов И.И., Петров П.П. Название
+                    патента. <strong>Доступно по:</strong> http://www... <strong>Ссылка активна на</strong> 12.12.2014.</li>
+                <li><strong>1.</strong> Patent RUS No.2193864/ 10.12.2002. Ivanov II, Petrov PP. <strong>Title of the patent
+                        translit</strong> [Title pf the patent in English]. <strong>Available from:</strong> http://www...
+                    <strong>(Accessed 12 December 2014).</strong>
+                </li>
+            </ul>
+        </p>
+    </div>
+</section>
+
+<section class="subname-section">
+    <div class="section-content">
+        <h5>Сноски / Footnotes : примеры</h5>
+    </div>
+</section>
+
+<section class="text-section">
+    <div class="section-content">
+        <p>
+            <h5>ГОСТы, СТАНДАРТЫ</h5>
+            <ul>
+                <li><strong>1.</strong> ГОСТ 8.586.5–2005. Название ГОСТ. Город: Изд-во стандартов, год. 10 с.</li>
+                <li><strong>1.</strong> State Standard 8.586.5–2005. <strong>Method of Measurement. Measurement of Flow Rate
+                        and Volume of Liquids and Gases by Means of Orifice Devices.</strong> Moscow: Standard
+                    Publications; 2007. 10 p. (In Russian).</li>
+            </ul>
+        </p>
+        <p>
+            <h5>МЕЖДУНАРОДНЫЕ СТАНДАРТЫ</h5>
+            <ul>
+                <li><strong>1.</strong> RFC 5246. Standard title. Netscape Communications Publ., year. 26 p.
+                    <strong>[Электронный ресурс]. Режим доступа:</strong> http://www... <strong>(дата обращения:
+                        12.09.2022).</strong>
+                </li>
+                <li><strong>1.</strong> RFC 5246. Standard title. Netscape Communications Publ., year. 26 p. <strong>Available
+                        from:</strong> http://www... <strong>(Accessed 12 September 2022).</strong></li>
+            </ul>
+        </p>
+        <p>
+            <h5>ЗАКОНОДАТЕЛЬНЫЕ И НОРМАТИВНЫЕ ДОКУМЕНТЫ</h5>
+            <ul>
+                <li><strong>1.</strong> Федеральный закон РФ от 21 июля 2011г. № 254-ФЗ «О внесении изменений в
+                    Федеральный закон «О науке и государственной научно-технической политике». <strong>[Электронный
+                        ресурс]. Режим доступа:</strong> http://www... <strong>(дата обращения: 12.09.2022).</strong></li>
+                <li><strong>1.</strong> The federal law of the Russian Federation of July 21, 2011 No. 254-FZ
+                    «Modification of the Federal law «On science and the state scientific and technical policy».
+                    <strong>Available from:</strong> http://www... <strong>(Accessed 12 September 2022).</strong>
+                </li>
+            </ul>
+        </p>
+    </div>
+</section>
+{% endblock %}

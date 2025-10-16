@@ -1,0 +1,37 @@
+{% extends 'journal/base.html' %}
+{% load static %}
+
+{% block title %}{{ article.title }} - Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
+
+{% block content %}
+<section class="info-section">
+    <div class="section-content">
+        <h1>{{ article.title }}</h1>
+        
+        <div class="article-detail">
+            <div class="article-meta">
+                <p><strong>Авторы:</strong> {{ article.authors }}</p>
+                <p><strong>Выпуск:</strong> {{ article.issue.number }}, {{ article.issue.year }}</p>
+                {% if article.doi %}
+                    <p><strong>DOI:</strong> {{ article.doi }}</p>
+                {% endif %}
+                {% if article.keywords %}
+                    <p><strong>Ключевые слова:</strong> {{ article.keywords }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="article-abstract">
+                <h2>Аннотация</h2>
+                <p>{{ article.abstract }}</p>
+            </div>
+            
+            <div class="article-actions">
+                {% if article.pdf_file %}
+                    <a href="{{ article.pdf_file.url }}" class="btn-download" target="_blank">Скачать PDF</a>
+                {% endif %}
+                <a href="{% url 'articles' %}" class="btn-back">К списку статей</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
