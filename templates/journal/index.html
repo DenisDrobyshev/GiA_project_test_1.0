@@ -4,6 +4,95 @@
 {% block title %}Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
 
 {% block content %}
+
+<style>
+/* Стиль для модальных окон */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Более плотный фон */
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 25px; /* Больше отступов */
+    border: none; /* Убираем рамку */
+    width: 90%;
+    max-width: 650px;
+    border-radius: 8px; /* Более скруглённые углы */
+    position: relative;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Более выраженная тень */
+    animation: modalFadeIn 0.3s ease-out; /* Плавное появление */
+}
+
+/* Анимация для плавного появления */
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Кнопка закрытия (крестик) */
+.close {
+    color: #888; /* Светлее серый */
+    float: right;
+    font-size: 32px; /* Более крупный крестик */
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    position: absolute; /* Абсолютное позиционирование */
+    right: 15px; /* Отступ справа */
+    top: 10px; /* Отступ сверху */
+}
+
+.close:hover,
+.close:focus {
+    color: #333; /* Темнее при наведении */
+    text-decoration: none;
+}
+
+/* Стили для текста внутри модального окна */
+.modal-content p {
+    margin-bottom: 12px; /* Отступ между параграфами */
+    line-height: 1.6; /* Улучшенная читаемость */
+}
+
+.modal-content h2 {
+    margin-top: 0; /* Убираем верхний отступ у заголовка */
+    color: #005a5a; /* Цвет заголовка, как в шаблоне */
+    border-bottom: 1px solid #eee; /* Тонкая линия под заголовком */
+    padding-bottom: 10px;
+}
+
+.modal-content em {
+    color: #666; /* Цвет для уточнений */
+    font-size: 0.9em;
+}
+
+.modal-content strong {
+    color: #333; /* Более контрастный жирный текст */
+}
+
+/* Стили для кнопки "Читать обращение полностью" */
+.open-appeal-modal {
+    color: #005a5a; /* Фиолетовый цвет, как ты просил */
+    text-decoration: underline; /* Подчёркивание */
+    cursor: pointer;
+}
+
+.open-appeal-modal:hover {
+    color: #007acc; /* Светлее при наведении */
+    text-decoration: none; /* Убираем подчёркивание при наведении */
+}
+</style>
+
 <section class="info-section" id="info-section">
     <div class="section-content" id="topic-section">
         <a href="">
@@ -44,7 +133,7 @@
                     Так, в Журнале предусмотрена политика "быстрой публикации" с применением технологий НЭБ eLIBRARY - Online First. Все статьи сначала входят в публикационную нишу журнала Online First, получают свой идентификатор DOI и индексирование, а позже переносится в выпуск этого же года. <br>
                     Оптимизация публикационной деятельности приветствуется у 90% авторов в силу рабочей необходимости, и "Геодезия и аэрофотосъемка" достойно отвечает на такой запрос научного сообщества.
                 </p>
-                <a href="" class="more-journal">Подробнее о журнале </a>
+                <a href="#journal-info-modal" class="more-journal open-journal-info-modal">Подробнее о журнале </a>
             </div>
             <a href="">Подать статью </a>
         </div>
@@ -73,24 +162,8 @@
                         Уважаемые коллеги! <br>
                         Мы рады приветствовать Вас на сайте уникального в своей отрасли научного журнала "Известия вузов "Геодезия и аэрофотосъемка".
                     </p>
-                    <!-- Используем details/summary -->
-                    <details>
-                        <summary>Читать обращение полностью</summary>
-                        <p>
-                            Наш журнал с гордостью отмечает свою богатую историю, уходящую корнями в середину прошлого века. За это время он стал неотъемлемой частью научного пространства, объединяя исследователей, стремящихся к познанию и освоению окружающего мира через призму геодезии, картографии, дистанционного зондирования и смежных наук.
-                        </p>
-                        <p>
-                            Мы стремимся поддерживать высочайшие стандарты научной честности и качества публикуемых материалов. Рецензирование, редакционная строгость и открытость к инновациям – вот ключевые принципы, на которых строится наша работа.
-                        </p>
-                        <p>
-                            Журнал "Геодезия и аэрофотосъемка" – это площадка для обмена знаниями, дискуссий и открытий. Мы приглашаем вас к сотрудничеству, к публикации ваших исследований и к участию в развитии науки.
-                        </p>
-                        <p>
-                            С уважением,<br>
-                            <em>Савиных Виктор Петрович</em><br>
-                            Президент университета, дважды Герой Советского Союза, академик РАН, доктор технических наук, профессор
-                        </p>
-                    </details>
+                    <!-- Ссылка теперь открывает другое модальное окно -->
+                    <a href="#appeal-modal" class="open-appeal-modal">Читать обращение полностью</a>
                 </div>
                 <h3>Президент университета, дважды Герой Советского Союза, академик РАН, доктор технических наук, профессор <br>
                     Савиных Виктор Петрович</h3>
@@ -153,5 +226,122 @@
     </div>
 </section>
 
+<!-- Модальное окно с информацией о журнале -->
+<div id="journal-info-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Известия вузов «Геодезия и аэрофотосъемка»</h2>
+        <p><em>научное издание МИИГАиК</em></p>
+        <p><strong>Специализация:</strong> аэрокосмические исследования Земли, геодезия, геоинформатика, землеустройство, кадастр, картография, мониторинг земель, фотограмметрия, оптические и оптико-электронные приборы и комплексы</p>
+        <p><strong>Периодичность:</strong> 6 выпусков в год</p>
+        <p><strong>Языки:</strong> русский, английский (метаданные)</p>
+        <p><strong>Год основания:</strong> 1957</p>
+        <p><strong>ISSN:</strong> 0536-101X</p>
+        <p><strong>e-ISSN:</strong> 2618-7299</p>
+        <p><strong>Подписной индекс:</strong> 70365 (Министерство цифрового развития, связи и массовых коммуникаций РФ)</p>
+        <p><strong>Индексирование:</strong> Перечень рецензируемых научных изданий ВАК (К1), Российский индекс научного цитирования (ядро РИНЦ), RSCI (Russian Science Citation Index) Web of Science</p>
+        <p><strong>Лицензия:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+    </div>
+</div>
+
+<!-- Новое модальное окно с обращением -->
+<div id="appeal-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Обращение главного редактора</h2>
+        <p>
+            Уважаемые коллеги!<br>
+            Мы рады приветствовать Вас на сайте уникального в своей отрасли научного журнала "Известия вузов "Геодезия и аэрофотосъемка".
+        </p>
+        <p>
+            Наш журнал с гордостью отмечает свою богатую историю, уходящую корнями в середину прошлого века. За это время он стал неотъемлемой частью научного пространства, объединяя исследователей, стремящихся к познанию и освоению окружающего мира через призму геодезии, картографии, дистанционного зондирования и смежных наук.
+        </p>
+        <p>
+            Мы стремимся поддерживать высочайшие стандарты научной честности и качества публикуемых материалов. Рецензирование, редакционная строгость и открытость к инновациям – вот ключевые принципы, на которых строится наша работа.
+        </p>
+        <p>
+            Журнал "Геодезия и аэрофотосъемка" – это площадка для обмена знаниями, дискуссий и открытий. Мы приглашаем вас к сотрудничеству, к публикации ваших исследований и к участию в развитии науки.
+        </p>
+        <p>
+            С уважением,<br>
+            <em>Савиных Виктор Петрович</em><br>
+            Президент университета, дважды Герой Советского Союза, академик РАН, доктор технических наук, профессор
+        </p>
+    </div>
+</div>
+
+<!-- Встроенный JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Элементы для окна "Подробнее о журнале"
+    var journalModal = document.getElementById("journal-info-modal");
+    var journalBtn = document.querySelector(".open-journal-info-modal");
+
+    // Элементы для окна "Обращение"
+    var appealModal = document.getElementById("appeal-modal");
+    var appealBtn = document.querySelector(".open-appeal-modal");
+
+    // Общие элементы закрытия и фона
+    var spans = document.querySelectorAll(".close");
+    var modals = document.querySelectorAll(".modal");
+
+    // Функция для открытия модального окна
+    function openModal(modal) {
+        modal.style.display = "block";
+        // Блокируем прокрутку фона
+        document.body.style.overflow = "hidden";
+    }
+
+    // Функция для закрытия модального окна
+    function closeModal(modal) {
+        modal.style.display = "none";
+        // Восстанавливаем прокрутку фона
+        document.body.style.overflow = "";
+    }
+
+    // Назначаем обработчики для кнопок открытия
+    if (journalBtn) {
+        journalBtn.onclick = function(event) {
+            event.preventDefault();
+            openModal(journalModal);
+        };
+    }
+
+    if (appealBtn) {
+        appealBtn.onclick = function(event) {
+            event.preventDefault();
+            openModal(appealModal);
+        };
+    }
+
+    // Назначаем обработчики для крестиков закрытия
+    spans.forEach(function(span) {
+        span.onclick = function() {
+            var modal = this.closest('.modal');
+            closeModal(modal);
+        };
+    });
+
+    // Назначаем обработчики для клика вне окна
+    modals.forEach(function(modal) {
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal(modal);
+            }
+        };
+    });
+
+    // Обработка нажатия ESC
+    window.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            modals.forEach(function(modal) {
+                if (modal.style.display === "block") {
+                    closeModal(modal);
+                }
+            });
+        }
+    });
+});
+</script>
 
 {% endblock %}
