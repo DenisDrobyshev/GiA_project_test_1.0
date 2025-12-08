@@ -4,58 +4,202 @@
 {% block title %}Выпуски журнала - Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
 
 {% block content %}
-<section class="info-section">
-    <div class="section-content">
-        <h1>Выпуски журнала</h1>
-        {% if issues %}
-            <div class="issues-list">
-                {% for issue in issues %}
-                    <div class="issue-item">
-                        <div class="issue-header">
-                            <h3>
-                                <a href="{% url 'issue_detail' issue.pk %}">
-                                    Выпуск {{ issue.number }}, {{ issue.year }}
-                                </a>
-                                {% if issue.is_current %}
-                                    <span class="current-badge">Текущий выпуск</span>
-                                {% endif %}
-                            </h3>
-                        </div>
-                        {% if issue.title %}
-                            <p class="issue-title">{{ issue.title }}</p>
-                        {% endif %}
-                        {% if issue.description %}
-                            <p class="issue-description">{{ issue.description|truncatewords:20 }}</p>
-                        {% endif %}
-                        <div class="issue-actions">
-                            <a href="{% url 'issue_detail' issue.pk %}" class="btn-read">Подробнее</a>
-                        </div>
-                    </div>
-                {% endfor %}
+
+<style>
+    /* ... (СТИЛИ ОСТАЮТСЯ ТЕМИ ЖЕ, ЧТО И РАНЬШЕ) ... */
+    .issues-header-fullwidth {
+        background-color: #e6e6e6;
+        width: 100%;
+        padding: 40px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .issues-header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .page-title {
+        color: #000;
+        font-size: 36px;
+        font-weight: 700;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .current-issue-widget {
+        background: transparent;
+        text-align: right;
+        min-width: 200px;
+    }
+    .ci-badge {
+        display: inline-block;
+        border: 2px solid #8a243e;
+        color: #8a243e;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        background: white;
+    }
+    .ci-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #000;
+        margin: 5px 0;
+    }
+    .ci-link {
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 5px;
+        background-color: #004d57;
+        padding: 6px 15px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+    .ci-link:hover {
+        background-color: #003840;
+    }
+    .issues-grid-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px 60px 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 30px;
+    }
+    .issue-card {
+        background-color: #fff;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    .issue-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .issue-cover-wrapper {
+        width: 100%;
+        padding-top: 140%;
+        position: relative;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #eee;
+    }
+    .issue-cover-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .issue-card-body {
+        padding: 15px;
+        text-align: center;
+    }
+    .issue-year {
+        font-size: 20px;
+        font-weight: 700;
+        color: #004d57;
+        margin: 0;
+    }
+    .issue-number {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+        text-transform: uppercase;
+    }
+    @media (max-width: 768px) {
+        .issues-header-inner {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .current-issue-widget {
+            text-align: left;
+            margin-top: 20px;
+        }
+    }
+</style>
+
+<!-- ЗАГОЛОВОК И ВИДЖЕТ -->
+<div class="issues-header-fullwidth">
+    <div class="issues-header-inner">
+        <h1 class="page-title">Выпуски журнала</h1>
+        
+        {% with current=issues.first %}
+            {% if current %}
+            <div class="current-issue-widget">
+                <div class="ci-badge">
+                    Выпуск {{ current.number }}, {{ current.year }}
+                </div>
+                <div class="ci-title">
+                    Текущий выпуск
+                </div>
+                <a href="{% url 'issue_detail' current.pk %}" class="ci-link">
+                    Подробнее →
+                </a>
             </div>
-            
-            {% if is_paginated %}
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if page_obj.has_previous %}
-                            <a href="?page=1">&laquo; первая</a>
-                            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
-                        {% endif %}
-                        
-                        <span class="current">
-                            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
-                        </span>
-                        
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}">следующая</a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
-                        {% endif %}
-                    </span>
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+<!-- СПИСОК ВСЕХ ВЫПУСКОВ -->
+<div class="issues-grid-container">
+    {% for issue in issues %}
+    <a href="{% url 'issue_detail' issue.pk %}" class="issue-card">
+        <div class="issue-cover-wrapper">
+            {% if issue.cover %}
+                <img src="{{ issue.cover.url }}" alt="{{ issue }}" class="issue-cover-img">
+            {% else %}
+                <div style="position: absolute; top:0; left:0; width:100%; height:100%; display: flex; align-items: center; justify-content: center; color: #ccc;">
+                    Нет обложки
                 </div>
             {% endif %}
-        {% else %}
-            <p>Выпуски не найдены.</p>
+        </div>
+        
+        <div class="issue-card-body">
+            <div class="issue-year">{{ issue.year }}</div>
+            <div class="issue-number">Том {{ issue.volume }} № {{ issue.number }}</div>
+        </div>
+    </a>
+    {% empty %}
+    <p style="padding: 20px; color: #777;">Выпуски еще не добавлены в базу данных.</p>
+    {% endfor %}
+</div>
+
+<!-- ИСПРАВЛЕННАЯ ПАГИНАЦИЯ -->
+{% if is_paginated %}
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 20px 40px; text-align: center;">
+    <div style="display: inline-block;">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="ci-link" style="margin-right: 10px;">← Назад</a>
+        {% endif %}
+        
+        <span style="font-weight: bold; color: #444; margin: 0 10px;">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="ci-link" style="margin-left: 10px;">Вперед →</a>
         {% endif %}
     </div>
-</section>
+</div>
+{% endif %} 
+
 {% endblock %}

@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse, Http404 
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
-from .models import JournalIssue, Article, EditorialBoard, JournalInfo, ArchiveYear
+from .models import JournalIssue, Article, JournalInfo, ArchiveYear
 from .forms import ContactForm
+from itertools import groupby
+
 
 def home_view(request):
     return render(request, 'journal/index.html')
@@ -69,6 +71,41 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'journal/article_detail.html'
     context_object_name = 'article'
+
+
+def download_article_pdf(request, article_id):
+    """Скачиваем пдф файла статьи (как вложение)"""
+    article = get_object_or_404(Article, pk=article_id)
+
+    # поле в модели article называется pdf_file если оно называется иначе изменить!
+
+    if not article.pdf_file:
+        raise Http404("Файл PDF для этой статьи отсутствует.")
+
+    try:
+        file_handle = article.pdf_file.open('rb')
+        response = FileResponse(file_handle, as_attachment=True)
+        # формируем имя файла для пользователя (безопасное)
+        filename = f"Article_{article_id}.pdf"
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+    except FileNotFoundError:
+        raise Http404("Файл не найден на сервере.")
+
+
+def read_article_pdf(request, article_id):
+    """Просмотр PDF файла статьи в браузере (inline)"""
+    article = get_object_or_404(Article, pk=article_id)
+    
+    if not article.pdf_file:
+        raise Http404("PDF файл для этой статьи отсутствует.")
+        
+    try:
+        file_handle = article.pdf_file.open('rb')
+        # as_attachment=False открывает файл во вкладке браузера
+        return FileResponse(file_handle, as_attachment=False)
+    except FileNotFoundError:
+        raise Http404("Файл не найден на сервере.")
 
 
 def editorial_board(request):
@@ -147,45 +184,36 @@ def references(request):
     return render(request, 'journal/references.html')
 
 
-ARCHIVE_RANGES = {
-    "1957-1959": {
-        1959: ["Том 1", "Том 2", "Том 3", "Том 4", "Том 5", "Том 6"],
-        1958: ["Том 1", "Том 2", "Том 3", "Том 4", "Том 5", "Том 6"],
-        1957: ["Том 1", "Том 2", "Том 3", "Том 4", "Том 5", "Том 6"],
-    },
-    "1960-1969": {
-        1969: ["Том 1", "Том 2"],
-        1968: ["Том 1"],
-        # и так далее
-    },
-    "2020-2025": {
-        2025: ["Том 1"],
-        2024: ["Том 1", "Том 2", "Том 3", "Том 4", "Том 5", "Том 6"],
-        2023: ["Том 1", "Том 2", "Том 3", "Том 4", "Том 5", "Том 6"],
-        # и так далее
-    },
-}
-
 def archive_range_view(request, year_range):
     """
-    Отображает архив для заданного промежутка лет (например, '1957-1959').
+    Отображает страницу архива для диапазона (например, '2020-2025').
     """
-    # Получаем данные для промежутка
-    range_data = ARCHIVE_RANGES.get(year_range)
+    try:
+        # Разбиваем строку "2020-2025" на начало и конец
+        start_year, end_year = map(int, year_range.split('-'))
+    except ValueError:
+        raise Http404("Некорректный формат диапазона лет")
 
-    if not range_data:
-        # Если промежуток не найден, можно вернуть 404 или редирект
-        from django.shortcuts import render
-        from django.http import Http404
-        raise Http404("Промежуток лет не найден в архиве.")
+    # 1. Достаем выпуски из БД, попадающие в этот диапазон
+    # order_by('-year') важен для группировки
+    issues = JournalIssue.objects.filter(
+        year__gte=start_year, 
+        year__lte=end_year
+    ).order_by('-year', '-number')
 
-    # Сортируем годы по убыванию (новые первыми)
-    sorted_years = sorted(range_data.keys(), reverse=True)
+    # 2. Группируем выпуски по годам для удобного вывода в шаблоне
+    # structure: [(2025, [issue1, issue2]), (2024, [issue3...])]
+    issues_by_year = []
+    for year, group in groupby(issues, key=lambda x: x.year):
+        issues_by_year.append((year, list(group)))
+    
+    # 3. Генерируем список лет для кнопок (от конца к началу)
+    years_list = list(range(end_year, start_year - 1, -1))
 
     context = {
         'year_range': year_range,
-        'range_data': range_data,
-        'sorted_years': sorted_years,
+        'issues_by_year': issues_by_year, # Данные для сетки
+        'years_list': years_list,          # Данные для кнопок
     }
 
     return render(request, 'journal/archive_range.html', context)
@@ -197,7 +225,3 @@ def sections(request):
 def editorial_staff(request):
     """Редакционная коллегия"""
     return render(request, 'journal/editorial_staff.html')
-
-def editorial_board(request):
-    """Редакционная коллегия"""
-    return render(request, 'journal/editorial_board.html')

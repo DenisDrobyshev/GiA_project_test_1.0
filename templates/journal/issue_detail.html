@@ -1,55 +1,255 @@
 {% extends 'journal/base.html' %}
 {% load static %}
 
-{% block title %}Выпуск {{ issue.number }}, {{ issue.year }} - Известия вузов. Геодезия и аэрофотосъемка{% endblock %}
+{% block title %}Известия вузов "Геодезия и аэрофотосъемка". {{ issue.year }}. Т. {{ issue.volume }}. № {{ issue.number }}.{% endblock %}
 
 {% block content %}
-<section class="info-section">
-    <div class="section-content">
-        <h1>Выпуск {{ issue.number }}, {{ issue.year }}</h1>
+
+<!-- Стили, специфичные для этой страницы -->
+<style>
+    /* Контейнер заголовка */
+    .issue-header-fullwidth {
+        background-color: #e6e6e6; /* Серый фон */
+        width: 100%;
+        padding: 40px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    
+    .issue-header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .issue-title {
+        color: #000;
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    /* Сетка статей */
+    .issue-content-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px 60px 20px;
+    }
+
+    .article-card {
+        background-color: #e6e8e9; /* Светло-серый фон карточки */
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .article-title {
+        margin: 0 0 15px 0;
+        font-size: 20px;
+        font-weight: 700;
+    }
+    
+    .article-title a {
+        color: #212529;
+        text-decoration: none;
+    }
+    
+    .article-title a:hover {
+        text-decoration: underline;
+    }
+
+    /* Бейджи (Рубрика, Авторы) */
+    .badge-container {
+        margin-bottom: 15px;
+    }
+
+    .badge-rubric {
+        display: inline-block;
+        background-color: #8a243e; /* Бордовый */
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    .badge-author {
+        display: inline-block;
+        background-color: #004d57; /* Темно-зеленый */
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    /* Аннотация */
+    details > summary {
+        color: #004d57;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none; /* Убираем треугольник */
+        margin-bottom: 10px;
+    }
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+    details > summary:after {
+        content: " ∨"; /* Своя стрелочка */
+        font-size: 12px;
+    }
+    
+    .abstract-text {
+        color: #6c757d;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-top: 10px;
+        padding: 10px;
+        background: rgba(255,255,255,0.5);
+        border-radius: 5px;
+    }
+
+    /* Разделитель */
+    .article-divider {
+        border: 0;
+        border-top: 2px solid #004d57;
+        margin: 20px 0;
+        opacity: 1;
+    }
+
+    /* Нижняя панель (Футер карточки) */
+    .article-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .pub-date {
+        color: #495057;
+        font-size: 14px;
+    }
+
+    .btn-group-custom {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-custom {
+        display: inline-flex;
+        align-items: center;
+        background-color: #004d57;
+        color: white;
+        text-decoration: none;
+        padding: 8px 20px;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background-color 0.2s;
+    }
+
+    .btn-custom:hover {
+        background-color: #003840; /* Чуть темнее при наведении */
+        color: white;
+    }
+    
+    .btn-icon {
+        margin-left: 8px;
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Адаптив для мобильных */
+    @media (max-width: 768px) {
+        .article-footer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .issue-title {
+            font-size: 24px;
+        }
+    }
+</style>
+
+<!-- ЗАГОЛОВОК -->
+<div class="issue-header-fullwidth">
+    <div class="issue-header-inner">
+        <h1 class="issue-title">
+            Известия вузов "Геодезия и аэрофотосъемка". {{ issue.year }}. Т. {{ issue.volume }}. № {{ issue.number }}.
+        </h1>
+    </div>
+</div>
+
+<!-- СПИСОК СТАТЕЙ -->
+<div class="issue-content-container">
+    {% for article in issue.articles.all %}
+    <div class="article-card">
         
-        {% if issue.title %}
-            <h2>{{ issue.title }}</h2>
-        {% endif %}
-        
-        {% if issue.description %}
-            <div class="issue-description">
-                <p>{{ issue.description }}</p>
+        <!-- Название -->
+        <h3 class="article-title">
+            <a href="{% url 'article_detail' article.pk %}">
+                {{ article.title }}
+            </a>
+        </h3>
+
+        <!-- Теги -->
+        <div class="badge-container">
+            {% if article.rubric %}
+                <span class="badge-rubric">{{ article.rubric }}</span>
+            {% endif %}
+            <span class="badge-author">{{ article.authors }}</span>
+        </div>
+
+        <!-- Аннотация -->
+        {% if article.abstract %}
+        <details>
+            <summary>Аннотация к статье</summary>
+            <div class="abstract-text">
+                {{ article.abstract }}
             </div>
+        </details>
         {% endif %}
-        
-        {% if issue.cover_image %}
-            <div class="issue-cover">
-                <img src="{{ issue.cover_image.url }}" alt="Обложка выпуска {{ issue.number }}, {{ issue.year }}">
+
+        <!-- Линия -->
+        <hr class="article-divider">
+
+        <!-- Футер -->
+        <div class="article-footer">
+            <div class="pub-date">
+                Дата публикации: {{ issue.publication_date|default:issue.year }}
             </div>
-        {% endif %}
-        
-        {% if issue.articles.all %}
-            <div class="issue-articles">
-                <h3>Статьи выпуска</h3>
-                <div class="articles-list">
-                    {% for article in issue.articles.all %}
-                        <div class="article-item">
-                            <h4><a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a></h4>
-                            <p class="article-authors">{{ article.authors }}</p>
-                            <p class="article-abstract">{{ article.abstract|truncatewords:20 }}</p>
-                            <div class="article-actions">
-                                <a href="{% url 'article_detail' article.pk %}" class="btn-read">Читать статью</a>
-                                {% if article.pdf_file %}
-                                    <a href="{{ article.pdf_file.url }}" class="btn-download" target="_blank">Скачать PDF</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+
+            <div class="btn-group-custom">
+                <!-- Кнопка PDF -->
+                {% if article.pdf_file %}
+                <a href="{% url 'download_article_pdf' article.id %}" class="btn-custom">
+                    PDF 
+                    <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                </a>
+
+                <!-- Кнопка Читать -->
+                <a href="{% url 'read_article_pdf' article.id %}" target="_blank" class="btn-custom">
+                    Читать
+                    <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+                    </svg>
+                </a>
+                {% endif %}
             </div>
-        {% else %}
-            <p>Статьи в этом выпуске не найдены.</p>
-        {% endif %}
-        
-        <div class="issue-actions">
-            <a href="{% url 'issues' %}" class="btn-back">К списку выпусков</a>
         </div>
     </div>
-</section>
+    {% empty %}
+    <div style="text-align: center; color: #666; padding: 40px;">
+        В этом выпуске пока нет статей.
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
